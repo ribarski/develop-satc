@@ -16,14 +16,21 @@ function App() {
     [rodadas]
   );
 
+  function atualizarPartida(partida, matchId, campo, valor) {
+    if (partida.id !== matchId) return partida;
+    return { ...partida, [campo]: valor };
+  }
+
+  function atualizarRodada(rodada, matchId, campo, valor) {
+    return {
+      ...rodada,
+      matches: rodada.matches.map((partida) => atualizarPartida(partida, matchId, campo, valor)),
+    };
+  }
+
   function atualizarPlacar(matchId, campo, valor) {
     setRodadas((rodadasAtuais) =>
-      rodadasAtuais.map((rodada) => ({
-        ...rodada,
-        matches: rodada.matches.map((partida) =>
-          partida.id === matchId ? { ...partida, [campo]: valor } : partida
-        ),
-      }))
+      rodadasAtuais.map((rodada) => atualizarRodada(rodada, matchId, campo, valor))
     );
   }
 
