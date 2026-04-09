@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useMemo } from 'react';
+import './App.css';
+import dadosIniciais from './data/mockData.json';
+import { calcularTabela } from './utils/tableCalculator';
+import StandingsTable from './components/StandingsTable';
+import MatchSimulator from './components/MatchSimulator';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [rodadas, setRodadas] = useState(dadosIniciais.rounds);
+  const [rodadaSelecionada, setRodadaSelecionada] = useState(
+    dadosIniciais.rounds[0]?.roundNumber ?? 1
+  );
+
+  const tabela = useMemo(
+    () => calcularTabela(dadosIniciais.teams, rodadas),
+    [rodadas]
+  );
+
+  function atualizarPlacar(matchId, campo, valor) {
+    setRodadas((rodadasAtuais) =>
+      rodadasAtuais.map((rodada) => ({
+        ...rodada,
+        matches: rodada.matches.map((partida) =>
+          partida.id === matchId ? { ...partida, [campo]: valor } : partida
+        ),
+      }))
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-container">
+      <header className="app-header">
+        <h1>🇧🇷 Simulador do Brasileirão</h1>
+        <p className="app-subtitle">Insira os placar e acompanhe a tabela em tempo real</p>
+      </header>
+
+      <main className="app-main">
+        <MatchSimulator
+          rodadas={rodadas}
+          times={dadosIniciais.teams}
+          onAtualizarPlacar={atualizarPlacar}
+          rodadaSelecionada={rodadaSelecionada}
+          onSelecionarRodada={setRodadaSelecionada}
+        />
+        <StandingsTable times={tabela} />
+      </main>
+
+      <footer className="app-footer">
+        <div className="legenda">
+          <span className="legenda-item zona-libertadores-badge">Libertadores (1°–4°)</span>
+          <span className="legenda-item zona-sulamericana-badge">Sul-Americana (5°–6°)</span>
+        </div>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -1,42 +1,357 @@
-#root {
-  max-width: 1280px;
+/* ===== Reset e base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --cor-primaria: #1a2e3b;
+  --cor-secundaria: #0e9b3c;
+  --cor-fundo: #0f1923;
+  --cor-card: #1e2d3d;
+  --cor-card-hover: #263649;
+  --cor-texto: #e8edf2;
+  --cor-texto-suave: #8fa0b0;
+  --cor-borda: #2a3e52;
+  --cor-libertadores: #1e4620;
+  --cor-sulamericana: #3b2800;
+  --cor-positivo: #22c55e;
+  --cor-negativo: #ef4444;
+  --cor-neutro: #64748b;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+}
+
+/* ===== Layout principal ===== */
+.app-container {
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1.5rem 1rem;
+}
+
+.app-header {
+  text-align: center;
+  padding: 2rem 1rem 1.5rem;
+  border-bottom: 2px solid var(--cor-secundaria);
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.app-subtitle {
+  color: var(--cor-texto-suave);
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.app-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.app-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--cor-borda);
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ===== Seções ===== */
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #fff;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ===== Tabela de Classificação ===== */
+.standings-section {
+  background: var(--cor-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--cor-borda);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.standings-table thead tr {
+  background: var(--cor-primaria);
+}
+
+.standings-table th {
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-suave);
+  border-bottom: 2px solid var(--cor-borda);
+  cursor: default;
+}
+
+.standings-table td {
+  padding: 0.65rem 0.8rem;
+  text-align: center;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.standings-table .team-name-col {
+  text-align: left;
+  min-width: 120px;
+  font-weight: 500;
+}
+
+.standings-table .points-col {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.standings-table .position-col {
+  width: 40px;
+}
+
+.position-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--cor-borda);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.standings-row:hover td {
+  background: var(--cor-card-hover);
+}
+
+.zona-libertadores td {
+  border-left: 3px solid var(--cor-secundaria);
+}
+
+.zona-libertadores .position-badge {
+  background: var(--cor-libertadores);
+  color: var(--cor-secundaria);
+}
+
+.zona-sulamericana td {
+  border-left: 3px solid #f59e0b;
+}
+
+.zona-sulamericana .position-badge {
+  background: var(--cor-sulamericana);
+  color: #f59e0b;
+}
+
+.saldo-positivo {
+  color: var(--cor-positivo);
+  font-weight: 600;
+}
+
+.saldo-negativo {
+  color: var(--cor-negativo);
+  font-weight: 600;
+}
+
+/* ===== Simulador de Rodadas ===== */
+.simulator-section {
+  background: var(--cor-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--cor-borda);
+}
+
+.round-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.round-btn {
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  border: 1px solid var(--cor-borda);
+  background: transparent;
+  color: var(--cor-texto-suave);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.round-btn:hover {
+  background: var(--cor-card-hover);
+  color: var(--cor-texto);
+  border-color: var(--cor-secundaria);
+}
+
+.round-btn.active {
+  background: var(--cor-secundaria);
+  color: #fff;
+  border-color: var(--cor-secundaria);
+  font-weight: 600;
+}
+
+.matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.match-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--cor-primaria);
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--cor-borda);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.team-home,
+.team-away {
+  flex: 1;
+  min-width: 100px;
+}
+
+.team-home {
+  text-align: right;
+}
+
+.team-away {
+  text-align: left;
+}
+
+.team-label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.score-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.score-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.score-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--cor-borda);
+  background: var(--cor-card);
+  color: var(--cor-texto);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+  line-height: 1;
+}
+
+.score-btn:hover {
+  background: var(--cor-borda);
+}
+
+.score-btn.increment:hover {
+  background: var(--cor-secundaria);
+  border-color: var(--cor-secundaria);
+}
+
+.score-input {
+  width: 48px;
+  height: 36px;
+  text-align: center;
+  background: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  color: var(--cor-texto);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.score-input:focus {
+  outline: none;
+  border-color: var(--cor-secundaria);
+}
+
+/* Remove setas nativas do input number */
+.score-input::-webkit-inner-spin-button,
+.score-input::-webkit-outer-spin-button {
+  appearance: none;
+}
+
+.score-separator {
+  font-size: 1.1rem;
+  color: var(--cor-texto-suave);
+  padding: 0 0.25rem;
+}
+
+/* ===== Legenda ===== */
+.legenda {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.legenda-item {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+.zona-libertadores-badge {
+  background: var(--cor-libertadores);
+  color: var(--cor-secundaria);
+  border: 1px solid var(--cor-secundaria);
+}
+
+.zona-sulamericana-badge {
+  background: var(--cor-sulamericana);
+  color: #f59e0b;
+  border: 1px solid #f59e0b;
+}
+
+/* ===== Responsivo ===== */
+@media (min-width: 768px) {
+  .app-main {
+    grid-template-columns: 1fr 1fr;
   }
-  to {
-    transform: rotate(360deg);
+
+  .app-header h1 {
+    font-size: 2.5rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
