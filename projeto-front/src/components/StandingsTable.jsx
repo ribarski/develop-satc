@@ -2,6 +2,8 @@
  * Componente que exibe a tabela de classificação do campeonato.
  * Recebe a lista de times já calculada e ordenada como prop.
  */
+import PropTypes from 'prop-types';
+
 function StandingsTable({ times }) {
   return (
     <section className="standings-section">
@@ -26,6 +28,7 @@ function StandingsTable({ times }) {
             {times.map((time, index) => {
               const saldoGols = time.goalsFor - time.goalsAgainst;
               const posicaoClasse = obterClassePosicao(index + 1);
+              const saldoClasse = saldoGols > 0 ? 'saldo-positivo' : saldoGols < 0 ? 'saldo-negativo' : '';
               return (
                 <tr key={time.id} className={`standings-row ${posicaoClasse}`}>
                   <td className="position-col">
@@ -39,7 +42,7 @@ function StandingsTable({ times }) {
                   <td>{time.losses}</td>
                   <td>{time.goalsFor}</td>
                   <td>{time.goalsAgainst}</td>
-                  <td className={saldoGols > 0 ? 'saldo-positivo' : saldoGols < 0 ? 'saldo-negativo' : ''}>
+                  <td className={saldoClasse}>
                     {saldoGols > 0 ? `+${saldoGols}` : saldoGols}
                   </td>
                 </tr>
@@ -60,8 +63,11 @@ function StandingsTable({ times }) {
 function obterClassePosicao(posicao) {
   if (posicao <= 4) return 'zona-libertadores';
   if (posicao <= 6) return 'zona-sulamericana';
-  if (posicao >= 6) return '';
   return '';
 }
+
+StandingsTable.propTypes = {
+  times: PropTypes.array.isRequired,
+};
 
 export default StandingsTable;

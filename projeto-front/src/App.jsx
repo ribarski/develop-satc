@@ -5,6 +5,11 @@ import { calcularTabela } from './utils/tableCalculator';
 import StandingsTable from './components/StandingsTable';
 import MatchSimulator from './components/MatchSimulator';
 
+function atualizarPartida(partida, matchId, campo, valor) {
+  if (partida.id !== matchId) return partida;
+  return { ...partida, [campo]: valor };
+}
+
 function App() {
   const [rodadas, setRodadas] = useState(dadosIniciais.rounds);
   const [rodadaSelecionada, setRodadaSelecionada] = useState(
@@ -15,11 +20,6 @@ function App() {
     () => calcularTabela(dadosIniciais.teams, rodadas),
     [rodadas]
   );
-
-  function atualizarPartida(partida, matchId, campo, valor) {
-    if (partida.id !== matchId) return partida;
-    return { ...partida, [campo]: valor };
-  }
 
   function atualizarRodada(rodada, matchId, campo, valor) {
     return {

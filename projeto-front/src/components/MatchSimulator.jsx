@@ -2,6 +2,8 @@
  * Componente que permite ao usuário simular os resultados das rodadas.
  * Exibe os confrontos de uma rodada e inputs para inserção dos placares.
  */
+import PropTypes from 'prop-types';
+
 function MatchSimulator({ rodadas, times, onAtualizarPlacar, rodadaSelecionada, onSelecionarRodada }) {
   const rodadaAtual = rodadas.find((r) => r.roundNumber === rodadaSelecionada);
 
@@ -11,7 +13,7 @@ function MatchSimulator({ rodadas, times, onAtualizarPlacar, rodadaSelecionada, 
   }
 
   function handleGolsChange(matchId, campo, valor) {
-    const gols = valor === '' ? null : Math.max(0, parseInt(valor, 10));
+    const gols = valor === '' ? null : Math.max(0, Number.parseInt(valor, 10));
     onAtualizarPlacar(matchId, campo, gols);
   }
 
@@ -115,5 +117,13 @@ function MatchSimulator({ rodadas, times, onAtualizarPlacar, rodadaSelecionada, 
     </section>
   );
 }
+
+MatchSimulator.propTypes = {
+  rodadas: PropTypes.array.isRequired,
+  times: PropTypes.array.isRequired,
+  onAtualizarPlacar: PropTypes.func.isRequired,
+  rodadaSelecionada: PropTypes.number.isRequired,
+  onSelecionarRodada: PropTypes.func.isRequired,
+};
 
 export default MatchSimulator;
