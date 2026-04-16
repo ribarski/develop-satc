@@ -10,6 +10,13 @@ function atualizarPartida(partida, matchId, campo, valor) {
   return { ...partida, [campo]: valor };
 }
 
+function atualizarRodada(rodada, matchId, campo, valor) {
+  return {
+    ...rodada,
+    matches: rodada.matches.map((partida) => atualizarPartida(partida, matchId, campo, valor)),
+  };
+}
+
 function App() {
   const [rodadas, setRodadas] = useState(dadosIniciais.rounds);
   const [rodadaSelecionada, setRodadaSelecionada] = useState(
@@ -20,13 +27,6 @@ function App() {
     () => calcularTabela(dadosIniciais.teams, rodadas),
     [rodadas]
   );
-
-  function atualizarRodada(rodada, matchId, campo, valor) {
-    return {
-      ...rodada,
-      matches: rodada.matches.map((partida) => atualizarPartida(partida, matchId, campo, valor)),
-    };
-  }
 
   function atualizarPlacar(matchId, campo, valor) {
     setRodadas((rodadasAtuais) =>

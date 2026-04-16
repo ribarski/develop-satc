@@ -28,7 +28,14 @@ function StandingsTable({ times }) {
             {times.map((time, index) => {
               const saldoGols = time.goalsFor - time.goalsAgainst;
               const posicaoClasse = obterClassePosicao(index + 1);
-              const saldoClasse = saldoGols > 0 ? 'saldo-positivo' : saldoGols < 0 ? 'saldo-negativo' : '';
+              let saldoClasse;
+              if (saldoGols > 0) {
+                saldoClasse = 'saldo-positivo';
+              } else if (saldoGols < 0) {
+                saldoClasse = 'saldo-negativo';
+              } else {
+                saldoClasse = '';
+              }
               return (
                 <tr key={time.id} className={`standings-row ${posicaoClasse}`}>
                   <td className="position-col">
