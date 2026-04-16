@@ -62,32 +62,32 @@ jobs:
 #      - name: Deploy to cluster
 #        run: kubectl apply -f deployment.yaml
 
-      # - name: Run Trivy vulnerability scanner
-      #   uses: aquasecurity/trivy-action@master
-      #   with:
-      #     scan-type: 'image'
-      #     image-ref: 'docker.io/USUARIO/satc-devops:0.0.2'
-      #     format: json
-      #     output: trivy-results.json
-      #     severity: MEDIUM,HIGH,CRITICAL
+       - name: Run Trivy vulnerability scanner
+         uses: aquasecurity/trivy-action@master
+         with:
+           scan-type: 'image'
+           image-ref: 'docker.io/USUARIO/satc-devops:0.0.2'
+           format: json
+           output: trivy-results.json
+           severity: MEDIUM,HIGH,CRITICAL
 
-      # - name: Upload Trivy results as artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: trivy-results.json
-      #     path: trivy-results.json
+       - name: Upload Trivy results as artifact
+         uses: actions/upload-artifact@v4
+         with:
+           name: trivy-results.json
+           path: trivy-results.json
 
-      # - name: Analyze Trivy results
-      #   run: |
-      #     if [ -f trivy-results.json ]; then
-      #       VULN_COUNT=$(jq '[.Results[].Vulnerabilities[] | select(.Severity == "MEDIUM")] | length' trivy-results.json)
-      #       echo "Quantidade de vulnerabilidades médias: $VULN_COUNT"
+       - name: Analyze Trivy results
+         run: |
+           if [ -f trivy-results.json ]; then
+             VULN_COUNT=$(jq '[.Results[].Vulnerabilities[] | select(.Severity == "MEDIUM")] | length' trivy-results.json)
+             echo "Quantidade de vulnerabilidades médias: $VULN_COUNT"
 
-      #       if [ "$VULN_COUNT" -gt 2 ]; then
-      #         echo "Pipeline bloqueada: mais de 2 vulnerabilidades médias encontradas."
-      #         exit 1
-      #       fi
-      #     else
-      #       echo "Arquivo de resultados do Trivy não encontrado."
-      #       exit 1
-      #     fi
+             if [ "$VULN_COUNT" -gt 2 ]; then
+               echo "Pipeline bloqueada: mais de 2 vulnerabilidades médias encontradas."
+               exit 1
+             fi
+           else
+             echo "Arquivo de resultados do Trivy não encontrado."
+             exit 1
+           fi
