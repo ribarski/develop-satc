@@ -34,7 +34,7 @@ spec:
           requests:
             memory: "128Mi"
             cpu: "100m"
-          livenessProbe:
+        livenessProbe:
             httpGet:
               path: /health
               port: 80
