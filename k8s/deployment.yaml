@@ -25,7 +25,7 @@ spec:
       - name: app-satc
         image: docker.io/##DOCKER_USERNAME##/satc-devops:##K8S_TAG##
         ports:
-        - containerPort: 4173
+        - containerPort: 80
           name: http
         resources:
           limits:
@@ -56,7 +56,7 @@ spec:
     app: app-satc
   ports:
   - port: 80
-    targetPort: 4173
+    targetPort: 80
     name: http
     protocol: TCP
 ---
