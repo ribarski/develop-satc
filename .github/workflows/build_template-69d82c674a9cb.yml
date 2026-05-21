@@ -1,4 +1,4 @@
-name: Deploy to Kind Cluster
+name: Build
 
 on:
   workflow_call:
@@ -54,16 +54,16 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t eduardoribarski/satc-devops:0.0.2 ./projeto-front
+        run: docker build -t eduardoribarski/satc-devops:${{ github.sha }} ./projeto-front
 
       - name: Push Docker image
-        run: docker push docker.io/eduardoribarski/satc-devops:0.0.2
+        run: docker push docker.io/eduardoribarski/satc-devops:${{ github.sha }}
 
       - name: Pull image
-        run: docker pull docker.io/eduardoribarski/satc-devops:0.0.2
+        run: docker pull docker.io/eduardoribarski/satc-devops:${{ github.sha }}
 
 #      - name: Load image into Kind
-#        run: kind load docker-image docker.io/USUARIO/satc-devops:0.0.2 --name cluster-satc
+#        run: kind load docker-image docker.io/USUARIO/satc-devops:${{ github.sha }} --name cluster-satc
 
 #      - name: Deploy to cluster
 #        run: kubectl apply -f deployment.yaml
@@ -72,7 +72,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'image'
-          image-ref: 'docker.io/eduardoribarski/satc-devops:0.0.2'
+          image-ref: 'docker.io/eduardoribarski/satc-devops:${{ github.sha }}'
           format: json
           output: trivy-results.json
           severity: MEDIUM,HIGH,CRITICAL

@@ -37,7 +37,7 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1>🇧🇷 Simulador do Brasileirão</h1>
+        <h1>🇧🇷 Simulador do Brasileirão do Eduardão</h1>
         <p className="app-subtitle">Insira os placar e acompanhe a tabela em tempo real</p>
       </header>
 
